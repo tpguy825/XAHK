@@ -23,7 +23,7 @@ ProgState := 0
 ;						will use option Menu to slect mode. Note that JumpFlying is only
 ;						avalible while in this state!
 ; 2: FishingMode	- Enter Fishing Mode
-; 3: ConcreteMode	- Enter Concrete Mode
+; 3: MineMode	- Enter Mine Mode
 ; 4: MobGrindMode	- Enter Mob Grinder Mode
 
 ;===================================================================================================
@@ -32,7 +32,7 @@ ProgState := 0
 Hotkey	!^f,	Fishing			; Pressing ctrl + alt + f will start fishing
 Hotkey  !^e,	JumpFly			; Pressing ctrl + alt + e will dubble hit space and fire a rockct in
 								; main hand
-Hotkey  !^c,	Concrete		; Pressing ctrl + alt + c will start concrete farming
+Hotkey  !^c,	Mine		; Pressing ctrl + alt + c will start mining
 Hotkey  !^m,	MobGrind		; Pressing ctrl + alt + m will start mob grinding
 Hotkey	!^s,	Stop			; Pressing ctrl + alt + s will stop it
 Hotkey  !^w,    SelectWindow 	;Allows user to select window to control by hovering mouse over it and
@@ -46,7 +46,7 @@ Menu, FileMenu, Add, Exit, MenuHandler
 Menu, HelpMenu, Add, About, MenuHandler
 Menu, OptionsMenu, Add, Fishing, MenuFishing
 Menu, OptionsMenu, Add, AFK Mob, MenuAFK
-Menu, OptionsMenu, Add, Concrete, MenuConcrete
+Menu, OptionsMenu, Add, Mine, MenuMine
 Menu, OptionsMenu, Add, JumpFlying, MenuJumpFly
 Menu, ClickerMenu, Add, File, :FileMenu
 Menu, ClickerMenu, Add, Help, :HelpMenu
@@ -158,8 +158,8 @@ MenuAFK:
 	Return
 }
 ;===================================================================================================
-; Switch to Concrete mode and update window
-MenuConcrete:
+; Switch to mining mode and update window
+MenuMine:
 {
 	; Stop and current active AHK process
 	BreakLoop := 1
@@ -170,7 +170,7 @@ MenuConcrete:
 	Gui, Add, Text,, Target Window Title : %targettitle%
 	Gui, Add, Text,, Windows HWIND is : %id%
 	Gui, Add, Text,, CURRENT AVALIBLE OPTIONS: 
-	Gui, Add, Text,, o- Pressing ctrl + alt + c will start concrete farming
+	Gui, Add, Text,, o- Pressing ctrl + alt + c will start mining
 	Gui, Add, Text,, o- Pressing ctrl + alt + s will stop any AutoKey funtion above
 	Gui, Show,, Minecraft X-AHK V0.4
 
@@ -220,14 +220,14 @@ JumpFly:
 }
 ;===================================================================================================
 ; Called when Ctrl+Alt+C is pressed. Hold both RIGHT and LEFT click down.
-Concrete:
+Mine:
 {
 	if (ProgState != 3)
 		Return
 		
 	BreakLoop := 0
 	
-	ControlClick, , ahk_id %id%, ,Right, , NAD
+	ControlClick, , ahk_id %id%, ,Left, , NAD
 	Sleep 500
 	ControlClick, , ahk_id %id%, ,Left, , NAD
 	sleep 100
@@ -240,7 +240,7 @@ Concrete:
 	}
 	ControlClick, , ahk_id %id%, ,Left, , NAU
 	Sleep 100
-	ControlClick, , ahk_id %id%, ,Right, , NAU
+	ControlClick, , ahk_id %id%, ,Left, , NAU
 	Return
 }
 ;===================================================================================================
